@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wulaobo.mapper.TopicMapper">
+
+
+    <resultMap id="queryForListMap" type="Topic">
+        <result property="id" column="id"/>
+        <result property="state" column="state"/>
+        <result property="title" column="title"/>
+        <result property="pubtime" column="pubtime"/>
+        <result property="detail" column="detail"/>
+        <result property="edituser" column="edituser"/>
+        <collection property="answer" javaType="java.util.List" ofType="Answer">
+            <result property="id" column="id"/>
+            <result property="state2" column="state2"/>
+            <result property="content" column="content"/>
+            <result property="answeruser" column="answeruser"/>
+            <result property="pubtime2" column="pubtime2"/>
+            <result property="topicId" column="topicId"/>
+        </collection>
+    </resultMap>
+
+
+   <!--添加帖子 -->
+   <insert id="addTopic" parameterType="topic">
+       insert into t_topic (title,pubtime,detail,edituser) values (#{title},#{pubtime},#{detail},#{edituser})
+   </insert>
+
+    <!-- 根据用户名，查询帖子 -->
+    <select id="getAllTopic" parameterType="String" resultType="topic">
+        select * from t_topic where edituser = #{edituser}
+    </select>
+
+    <select id="getTopicById" parameterType="Integer" resultType="topic">
+        select * from t_topic where id = #{id}
+    </select>
+
+    <update id="editTopic" parameterType="topic">
+        update t_topic set title = #{title}, pubtime = #{pubtime}, detail = #{detail} where id = #{id}
+    </update>
+
+    <delete id="deleteTopicById" parameterType="Integer">
+        delete from t_topic where id = #{id}
+    </delete>
+
+    <!-- 查询其他用户的帖子 -->
+    <select id="getMessageTopicList"  resultType="topic">
+        select * from t_topic
+    </select>
+
+    <select id="findTopicAnswerById" parameterType="Integer" resultMap="queryForListMap">
+        select a.content,a.answeruser,a.pubtime2,a.topicId,a.state2 from t_answer a,t_topic t where a.topicId=#{id} and t.id=#{id} and t.state!=0
+    </select>
+
+    <select id="getTopicByName" parameterType="String" resultType="topic">
+        select * from t_topic where edituser like '%${_parameter}%'
+    </select>
+
+    <update id="updateStateByTopic" parameterType="topic">
+        update t_topic set state = #{state} where id=#{id}
+    </update>
+
+
+</mapper>

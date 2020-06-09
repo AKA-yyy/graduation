@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wulaobo.mapper.NewsMapper">
+
+
+    <select id="getAllNews" resultType="news">
+        select * from t_news
+    </select>
+
+    <select id="getNewsById" parameterType="java.lang.Integer" resultType="news">
+        select * from t_news where id=#{id}
+    </select>
+
+    <select id="selectNewsByTitle" parameterType="String" resultType="news">
+        select * from t_news where title like '%${_parameter}%'
+    </select>
+
+
+    <update id="updateNews" parameterType="news">
+        update t_news set title=#{title},article=#{article},time=#{time} where id=#{id}
+    </update>
+
+    <delete id="deleteNewsById" parameterType="Integer">
+        delete from t_news where id=#{id}
+    </delete>
+
+    <insert id="addNews" parameterType="news">
+        insert into t_news (title,article,time) values(#{title},#{article},#{time})
+    </insert>
+
+
+</mapper>

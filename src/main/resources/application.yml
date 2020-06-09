@@ -1,0 +1,42 @@
+#端口
+server:
+  port: 8888
+  servlet:
+    context-path: /
+
+#设置静态资源的访问根路径为 /
+spring:
+  resources:
+    static-locations: classpath:/   #设置静态资源的访问根路径为 /
+  thymeleaf:
+    cache: false   #页面模板缓存
+  datasource:
+    url: jdbc:mysql://localhost:3306/safe?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  servlet:
+    multipart:
+      max-request-size: 1000MB
+      max-file-size: 1000MB
+      location: d:/restaurantRes
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+
+
+
+
+mybatis:
+  config-location: classpath:mybatis/mybatis_config.xml
+  mapper-locations: classpath:mybatis/mapper/*Mapper.xml
+
+#pagehelper
+pagehelper:
+  helper-dialect: mysql
+  reasonable: reasonable
+  support-methods-arguments: true
+  params: count=countSql
