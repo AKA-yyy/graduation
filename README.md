@@ -1,2 +1,1 @@
-"# graduation" 
-"# graduation" 
+一个及其简单的学习网站（个人练习）
